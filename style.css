@@ -24,20 +24,20 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 8px;
+    gap: 4px;
     margin-left: 40px;
 }
 
 .logo {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .title {
     font-family: 'Lexend', sans-serif;
     font-size: 1.8rem;
-    font-weight: 600;
+    font-weight: 400;
     color: #ffffff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -56,15 +56,15 @@ main {
 /* Time Selector */
 .time-selector {
     display: flex;
-    gap: 8px;
+    gap: 4px;
 }
 
 .time-option {
     background: transparent;
     border: none;
-    padding: 8px 16px;
+    padding: 6px 12px;
     font-family: 'Arvo', serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: #ffffff;
     border-radius: 8px;
@@ -118,14 +118,14 @@ main {
 .word-display {
     background: #f3f3f3;
     border-radius: 16px;
-    padding: 25px 30px;
-    height: 110px;
+    padding: 20px 25px;
+    height: 80px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     font-family: 'Lexend', sans-serif;
-    font-size: 1.2rem;
-    line-height: 1.6;
+    font-size: 1.1rem;
+    line-height: 1.4;
     display: flex;
     align-items: center;
 }
@@ -254,26 +254,32 @@ footer p {
 @media (max-width: 768px) {
     .header-content {
         margin-left: 30px;
+        gap: 3px;
     }
     
     .logo {
-        width: 64px;
-        height: 64px;
+        width: 72px;
+        height: 72px;
     }
     
     .title {
         font-size: 1.6rem;
+        font-weight: 400;
+    }
+    
+    .time-selector {
+        gap: 3px;
     }
     
     .time-option {
-        font-size: 0.9rem;
-        padding: 8px 16px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
     }
     
     .word-display {
-        font-size: 1.1rem;
-        padding: 20px 25px;
-        height: 95px;
+        font-size: 1rem;
+        padding: 18px 22px;
+        height: 75px;
     }
     
     .countdown {
@@ -292,27 +298,33 @@ footer p {
 @media (max-width: 480px) {
     .header-content {
         flex-direction: row;
-        gap: 6px;
+        gap: 3px;
         margin-left: 20px;
     }
     
     .logo {
-        width: 56px;
-        height: 56px;
+        width: 64px;
+        height: 64px;
     }
     
     .title {
         font-size: 1.4rem;
+        font-weight: 400;
     }
     
     .time-selector {
-        gap: 6px;
+        gap: 3px;
+    }
+    
+    .time-option {
+        font-size: 0.8rem;
+        padding: 5px 10px;
     }
     
     .word-display {
-        font-size: 1rem;
-        padding: 18px 22px;
-        height: 85px;
+        font-size: 0.95rem;
+        padding: 16px 20px;
+        height: 70px;
     }
     
     .wpm-number {
