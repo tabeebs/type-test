@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeTest - WPM Typing Test</title>
+    <meta name="description" content="Test your typing speed with this WPM typing test application">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Arvo:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="assets/logo.png" alt="TypeTest Logo" class="logo">
+            <h1 class="title">typetest</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="time-selector" id="timeSelector">
+            <button class="time-option active" data-time="15">15</button>
+            <button class="time-option" data-time="30">30</button>
+            <button class="time-option active-default" data-time="60">60</button>
+        </section>
+
+        <section class="timer-display" id="timerDisplay" style="display: none;">
+            <div class="countdown" id="countdown">60</div>
+        </section>
+
+        <section class="word-display-container">
+            <div class="word-display" id="wordDisplay">
+                <div class="caret" id="caret"></div>
+                <div class="words-content" id="wordsContent">
+                    <!-- Words will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <section class="controls">
+            <button class="restart-btn" id="restartBtn">Restart (TAB)</button>
+        </section>
+
+        <section class="results" id="results" style="display: none;">
+            <div class="wpm-display">
+                <span class="wpm-number" id="wpmNumber">0</span>
+                <span class="wpm-text">wpm</span>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 TypeTest. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="words.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

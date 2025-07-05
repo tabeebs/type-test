@@ -1,0 +1,267 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lexend', sans-serif;
+    background-color: #b33939ff;
+    color: #000000;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+header {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.title {
+    font-family: 'Lexend', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 30px;
+}
+
+/* Time Selector */
+.time-selector {
+    display: flex;
+    gap: 20px;
+}
+
+.time-option {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    padding: 12px 24px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.time-option:hover,
+.time-option.active,
+.time-option.active-default {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Timer Display */
+.timer-display {
+    text-align: center;
+}
+
+.countdown {
+    font-family: 'Lexend', sans-serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #f1c40f;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Word Display */
+.word-display-container {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+}
+
+.word-display {
+    background: #f3f3f3;
+    border-radius: 16px;
+    padding: 30px;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-family: 'Lexend', sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.8;
+}
+
+.caret {
+    position: absolute;
+    width: 2px;
+    height: 2rem;
+    background: #000000;
+    animation: blink 1s infinite;
+    z-index: 10;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.words-content {
+    position: relative;
+    z-index: 1;
+    line-height: 1.8;
+}
+
+.word {
+    display: inline;
+}
+
+.char {
+    position: relative;
+    display: inline;
+}
+
+.char.correct {
+    color: #44bd32;
+    background-color: rgba(68, 189, 50, 0.1);
+}
+
+.char.incorrect {
+    color: #eb2f06;
+    background-color: rgba(235, 47, 6, 0.1);
+}
+
+.char.space {
+    display: inline;
+}
+
+/* Controls */
+.controls {
+    text-align: center;
+}
+
+.restart-btn {
+    background: #f1c40f;
+    border: none;
+    padding: 12px 24px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #000000;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.restart-btn:hover {
+    background: #f39c12;
+    transform: translateY(-2px);
+}
+
+/* Results Display */
+.results {
+    text-align: center;
+}
+
+.wpm-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+}
+
+.wpm-number {
+    font-family: 'Arvo', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.wpm-text {
+    font-family: 'Arvo', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #ffffff;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+    
+    .time-option {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+    
+    .word-display {
+        font-size: 1.2rem;
+        padding: 20px;
+        min-height: 150px;
+    }
+    
+    .countdown {
+        font-size: 2.5rem;
+    }
+    
+    .wpm-number {
+        font-size: 3rem;
+    }
+    
+    .wpm-text {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .time-selector {
+        gap: 10px;
+    }
+    
+    .word-display {
+        font-size: 1rem;
+        padding: 15px;
+    }
+    
+    .wpm-number {
+        font-size: 2.5rem;
+    }
+} 

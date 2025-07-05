@@ -4,70 +4,70 @@ This document outlines the development plan for the WPM typing test application,
 
 ## Phase 1: Project Setup & Foundational HTML
 
-- [ ] Initialize project with `index.html`, `style.css`, and `script.js`.
-- [ ] Create an `assets` directory for `logo.png`.
-- [ ] Convert `logo.png` to `favicon.ico` and place it in the root or assets folder.
-- [ ] Set up the basic HTML structure in `index.html`, including header, main content, and footer sections.
-- [ ] Link external resources in `index.html`: CSS, JavaScript, Google Fonts ('Lexend', 'Arvo'), and favicon.
-- [ ] Create a `words.js` file and populate it with the provided list of common English words.
-- [ ] Add basic styling to `style.css`, including the background color (`#b33939ff`) and global font settings.
+- [x] Initialize project with `index.html`, `style.css`, and `script.js`.
+- [x] Create an `assets` directory for `logo.png`.
+- [x] Convert `logo.png` to `favicon.ico` and place it in the root or assets folder.
+- [x] Set up the basic HTML structure in `index.html`, including header, main content, and footer sections.
+- [x] Link external resources in `index.html`: CSS, JavaScript, Google Fonts ('Lexend', 'Arvo'), and favicon.
+- [x] Create a `words.js` file and populate it with the provided list of common English words.
+- [x] Add basic styling to `style.css`, including the background color (`#b33939ff`) and global font settings.
 
 ## Phase 2: Building the Static UI (Pre-Test State)
 
-- [ ] **Header:**
-    - [ ] Implement the header layout with the logo and "typetest" title.
-    - [ ] Style the logo and title text according to concept sketch #1 (Lexend font, colors, drop shadow).
-- [ ] **Footer:**
-    - [ ] Implement and style the footer with the copyright notice.
-- [ ] **Time Selector:**
-    - [ ] Create the "15 30 60" time selection UI elements.
-    - [ ] Style the time selectors (Lexend font, colors for selected/unselected, drop shadow).
-- [ ] **Word Display Box:**
-    - [ ] Create the main rounded rectangle for displaying words (`#f3f3f3`, drop shadow).
-    - [ ] Write a JavaScript function to randomly select words from `words.js` and populate the display box.
-    - [ ] Structure the words inside the box: each character should be wrapped in a `<span>` for individual styling and position tracking.
-    - [ ] Style the word text as per the spec (Lexend, `#000000`).
-- [ ] **Caret:**
-    - [ ] Implement the text caret as a separate element (e.g., a `<span>` or `<div>`).
-    - [ ] Style the caret with a blinking animation.
-    - [ ] Position the caret at the start of the very first character.
-- [ ] **Restart Button:**
-    - [ ] Create and style the "Restart (TAB)" button (yellowish color, Lexend font, text color, drop shadow).
+- [x] **Header:**
+    - [x] Implement the header layout with the logo and "typetest" title.
+    - [x] Style the logo and title text according to concept sketch #1 (Lexend font, colors, drop shadow).
+- [x] **Footer:**
+    - [x] Implement and style the footer with the copyright notice.
+- [x] **Time Selector:**
+    - [x] Create the "15 30 60" time selection UI elements.
+    - [x] Style the time selectors (Lexend font, colors for selected/unselected, drop shadow).
+- [x] **Word Display Box:**
+    - [x] Create the main rounded rectangle for displaying words (`#f3f3f3`, drop shadow).
+    - [x] Write a JavaScript function to randomly select words from `words.js` and populate the display box.
+    - [x] Structure the words inside the box: each character should be wrapped in a `<span>` for individual styling and position tracking.
+    - [x] Style the word text as per the spec (Lexend, `#000000`).
+- [x] **Caret:**
+    - [x] Implement the text caret as a separate element (e.g., a `<span>` or `<div>`).
+    - [x] Style the caret with a blinking animation.
+    - [x] Position the caret at the start of the very first character.
+- [x] **Restart Button:**
+    - [x] Create and style the "Restart (TAB)" button (yellowish color, Lexend font, text color, drop shadow).
 
 ## Phase 3: Core Typing Logic and Interaction
 
-- [ ] **Input Handling:**
-    - [ ] Set focus to the word display box on page load so the user can start typing immediately.
-    - [ ] Add a `keydown` event listener to capture all user keyboard input.
-- [ ] **Test Start Trigger:**
-    - [ ] On the *first* valid character input, trigger the start of the test.
-    - [ ] Animate the UI transition: smoothly hide the time selector and show the main countdown timer.
-- [ ] **Timer Mechanism:**
-    - [ ] Implement the countdown timer based on the selected time (defaulting to 60s).
-    - [ ] Style the countdown timer as per concept sketch #2 (larger, `#f1c40f`, drop shadow).
-    - [ ] The timer should visually update every second.
-- [ ] **Character Validation Logic:**
-    - [ ] On each key press, compare the input with the character at the caret's current position.
-    - [ ] **Correct Input:** Change the character's `<span>` color to green (`#44bd32`).
-    - [ ] **Incorrect Input:** Change the character's `<span>` color to red (`#eb2f06`).
-    - [ ] **Backspace:** Handle moving the caret backward and resetting the character's style to default (untyped).
-    - [ ] Keep a running count of `correct key strokes` for the final WPM calculation.
-- [ ] **Caret Movement:**
-    - [ ] Implement smooth, animated caret movement.
-    - [ ] On each valid input (correct, incorrect, or backspace), calculate the position of the next (or previous) character's `<span>` and transition the caret's position using CSS transforms.
+- [x] **Input Handling:**
+    - [x] Set focus to the word display box on page load so the user can start typing immediately.
+    - [x] Add a `keydown` event listener to capture all user keyboard input.
+- [x] **Test Start Trigger:**
+    - [x] On the *first* valid character input, trigger the start of the test.
+    - [x] Animate the UI transition: smoothly hide the time selector and show the main countdown timer.
+- [x] **Timer Mechanism:**
+    - [x] Implement the countdown timer based on the selected time (defaulting to 60s).
+    - [x] Style the countdown timer as per concept sketch #2 (larger, `#f1c40f`, drop shadow).
+    - [x] The timer should visually update every second.
+- [x] **Character Validation Logic:**
+    - [x] On each key press, compare the input with the character at the caret's current position.
+    - [x] **Correct Input:** Change the character's `<span>` color to green (`#44bd32`).
+    - [x] **Incorrect Input:** Change the character's `<span>` color to red (`#eb2f06`).
+    - [x] **Backspace:** Handle moving the caret backward and resetting the character's style to default (untyped).
+    - [x] Keep a running count of `correct key strokes` for the final WPM calculation.
+- [x] **Caret Movement:**
+    - [x] Implement smooth, animated caret movement.
+    - [x] On each valid input (correct, incorrect, or backspace), calculate the position of the next (or previous) character's `<span>` and transition the caret's position using CSS transforms.
 
 ## Phase 4: Dynamic Line Scrolling
 
-- [ ] **Line Change Trigger:**
-    - [ ] Detect when the user correctly types a space after the last word on the top line.
-- [ ] **Scrolling Animation:**
-    - [ ] Animate the completed top line moving up and out of the box.
-    - [ ] Animate the second line moving up to take the top line's position.
-    - [ ] This requires the word box container to have `overflow: hidden`.
-- [ ] **New Line Generation:**
-    - [ ] Write a function to generate a new line of random words.
-    - [ ] Animate the new line appearing at the bottom of the box.
-    - [ ] Ensure the scrolling is fast and smooth to not interrupt the typing flow.
+- [x] **Line Change Trigger:**
+    - [x] Detect when the user correctly types a space after the last word on the top line.
+- [x] **Scrolling Animation:**
+    - [x] Animate the completed top line moving up and out of the box.
+    - [x] Animate the second line moving up to take the top line's position.
+    - [x] This requires the word box container to have `overflow: hidden`.
+- [x] **New Line Generation:**
+    - [x] Write a function to generate a new line of random words.
+    - [x] Animate the new line appearing at the bottom of the box.
+    - [x] Ensure the scrolling is fast and smooth to not interrupt the typing flow.
 
 ## Phase 5: Test Completion and Results Display
 
