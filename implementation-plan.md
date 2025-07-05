@@ -84,16 +84,16 @@ This document outlines the development plan for the WPM typing test application,
 
 ## Phase 6: Reset and Refinement
 
-- [ ] **Restart Logic:**
-    - [ ] Implement the `restartTest` function that will be called by clicking the Restart button or pressing the TAB key.
-    - [ ] This function must reset the entire application state: reset timer, regenerate words, reset caret, clear scores, and restore the pre-test UI.
-- [ ] **Event Listeners:**
-    - [ ] Add a `click` listener to the Restart button.
-    - [ ] Add a `keydown` listener to the document to handle the TAB key for restarting.
-    - [ ] Add click listeners to the "15", "30", "60" options to update the selected test duration.
-- [ ] **Responsiveness:**
-    - [ ] Add CSS media queries to ensure the layout is functional and looks good on various screen sizes, from mobile to desktop.
-- [ ] **Final Polish & Review:**
-    - [ ] Test for edge cases (e.g., rapid typing, holding down backspace, resizing window during the test).
-    - [ ] Review all animations and transitions for smoothness.
-    - [ ] Adhere to the `cursor-rules.md` for naming conventions and code style. 
+- [x] **Restart Logic:**
+    - [x] Implement the `restartTest` function that will be called by clicking the Restart button or pressing the TAB key.
+    - [x] This function must reset the entire application state: reset timer, regenerate words, reset caret, clear scores, and restore the pre-test UI.
+- [x] **Event Listeners:**
+    - [x] Add a `click` listener to the Restart button.
+    - [x] Add a `keydown` listener to the document to handle the TAB key for restarting.
+    - [x] Add click listeners to the "15", "30", "60" options to update the selected test duration.
+- [x] **Responsiveness:**
+    - [x] Add CSS media queries to ensure the layout is functional and looks good on various screen sizes, from mobile to desktop.
+- [x] **Final Polish & Review:**
+    - [x] Test for edge cases (e.g., rapid typing, holding down backspace, resizing window during the test).
+    - [x] Review all animations and transitions for smoothness.
+    - [x] Adhere to the `cursor-rules.md` for naming conventions and code style. 

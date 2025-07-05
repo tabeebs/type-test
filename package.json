@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest --watchAll=false",
     "test:watch": "jest --watchAll",
+    "dev": "npx http-server -p 3000 -o",
     "lint": "eslint *.js --fix",
     "format": "prettier --write *.js *.css *.html"
   },

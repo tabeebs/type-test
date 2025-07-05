@@ -5,22 +5,58 @@
 
 // Mock words.js functions
 const WORDS = [
-    'the', 'of', 'and', 'a', 'to', 'in', 'is', 'you', 'that', 'it',
-    'he', 'was', 'for', 'on', 'are', 'as', 'with', 'his', 'they', 'i',
-    'at', 'be', 'this', 'have', 'from', 'or', 'one', 'had', 'by', 'word',
-    'but', 'not', 'what', 'all', 'were', 'we', 'when', 'your', 'can', 'said'
+  "the",
+  "of",
+  "and",
+  "a",
+  "to",
+  "in",
+  "is",
+  "you",
+  "that",
+  "it",
+  "he",
+  "was",
+  "for",
+  "on",
+  "are",
+  "as",
+  "with",
+  "his",
+  "they",
+  "i",
+  "at",
+  "be",
+  "this",
+  "have",
+  "from",
+  "or",
+  "one",
+  "had",
+  "by",
+  "word",
+  "but",
+  "not",
+  "what",
+  "all",
+  "were",
+  "we",
+  "when",
+  "your",
+  "can",
+  "said",
 ];
 
 function getRandomWord() {
-    return WORDS[Math.floor(Math.random() * WORDS.length)];
+  return WORDS[Math.floor(Math.random() * WORDS.length)];
 }
 
 function generateWords(count = 20) {
-    const words = [];
-    for (let i = 0; i < count; i++) {
-        words.push(getRandomWord());
-    }
-    return words;
+  const words = [];
+  for (let i = 0; i < count; i++) {
+    words.push(getRandomWord());
+  }
+  return words;
 }
 
 // Make functions available globally for tests
@@ -76,23 +112,23 @@ const mockHTML = `
 
 // Set up DOM before each test
 beforeEach(() => {
-    document.body.innerHTML = mockHTML;
-    
-    // Mock getBoundingClientRect
-    Element.prototype.getBoundingClientRect = jest.fn(() => ({
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        width: 0,
-        height: 0,
-        x: 0,
-        y: 0
-    }));
+  document.body.innerHTML = mockHTML;
+
+  // Mock getBoundingClientRect
+  Element.prototype.getBoundingClientRect = jest.fn(() => ({
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    width: 0,
+    height: 0,
+    x: 0,
+    y: 0,
+  }));
 });
 
 // Clean up after each test
 afterEach(() => {
-    document.body.innerHTML = '';
-    jest.clearAllMocks();
-}); 
+  document.body.innerHTML = "";
+  jest.clearAllMocks();
+});
