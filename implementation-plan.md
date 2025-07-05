@@ -71,7 +71,7 @@ This document outlines the development plan for the WPM typing test application,
 
 ## Phase 5: Test Completion and Results Display
 
-- [ ] **End of Test:**
+- [ ] **End of Test:** 
     - [ ] The test concludes when the countdown timer reaches 0.
 - [ ] **WPM Calculation:**
     - [ ] Once the timer finishes, calculate the final score using the formula: `WPM = round(correct key strokes / 5)`.
