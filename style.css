@@ -17,25 +17,26 @@ body {
 /* Header Styles */
 header {
     padding: 20px 0;
-    text-align: center;
+    text-align: left;
 }
 
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-left: 40px;
 }
 
 .logo {
-    width: 48px;
-    height: 48px;
+    width: 72px;
+    height: 72px;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .title {
     font-family: 'Lexend', sans-serif;
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: #ffffff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -55,15 +56,15 @@ main {
 /* Time Selector */
 .time-selector {
     display: flex;
-    gap: 20px;
+    gap: 8px;
 }
 
 .time-option {
-    background: rgba(255, 255, 255, 0.2);
+    background: transparent;
     border: none;
-    padding: 12px 24px;
-    font-family: 'Lexend', sans-serif;
-    font-size: 1.2rem;
+    padding: 8px 16px;
+    font-family: 'Arvo', serif;
+    font-size: 1rem;
     font-weight: 500;
     color: #ffffff;
     border-radius: 8px;
@@ -72,10 +73,13 @@ main {
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-.time-option:hover,
+.time-option:hover {
+    transform: translateY(-2px);
+}
+
 .time-option.active,
 .time-option.active-default {
-    background: rgba(255, 255, 255, 0.4);
+    color: #f1c40f;
     transform: translateY(-2px);
 }
 
@@ -114,14 +118,16 @@ main {
 .word-display {
     background: #f3f3f3;
     border-radius: 16px;
-    padding: 30px;
-    min-height: 200px;
+    padding: 25px 30px;
+    height: 110px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     font-family: 'Lexend', sans-serif;
-    font-size: 1.5rem;
-    line-height: 1.8;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
 }
 
 .caret {
@@ -185,7 +191,7 @@ main {
     font-family: 'Lexend', sans-serif;
     font-size: 1.1rem;
     font-weight: 500;
-    color: #000000;
+    color: #434343 !important;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -240,21 +246,34 @@ footer {
     opacity: 0.8;
 }
 
+footer p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+    .header-content {
+        margin-left: 30px;
+    }
+    
+    .logo {
+        width: 64px;
+        height: 64px;
+    }
+    
     .title {
-        font-size: 2rem;
+        font-size: 1.6rem;
     }
     
     .time-option {
-        font-size: 1rem;
-        padding: 10px 20px;
+        font-size: 0.9rem;
+        padding: 8px 16px;
     }
     
     .word-display {
-        font-size: 1.2rem;
-        padding: 20px;
-        min-height: 150px;
+        font-size: 1.1rem;
+        padding: 20px 25px;
+        height: 95px;
     }
     
     .countdown {
@@ -272,17 +291,28 @@ footer {
 
 @media (max-width: 480px) {
     .header-content {
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row;
+        gap: 6px;
+        margin-left: 20px;
+    }
+    
+    .logo {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .title {
+        font-size: 1.4rem;
     }
     
     .time-selector {
-        gap: 10px;
+        gap: 6px;
     }
     
     .word-display {
         font-size: 1rem;
-        padding: 15px;
+        padding: 18px 22px;
+        height: 85px;
     }
     
     .wpm-number {
