@@ -423,12 +423,27 @@ function endTest() {
     // Calculate WPM
     const wpm = Math.round(testState.correctKeystrokes / 5);
     
-    // Show results
-    elements.timerDisplay.style.display = 'none';
-    elements.wordDisplay.style.display = 'none';
-    elements.restartBtn.style.display = 'none';
-    elements.results.style.display = 'block';
-    elements.wpmNumber.textContent = wpm;
+    // Smoothly fade out the typing interface
+    elements.timerDisplay.classList.add('fade-out');
+    elements.wordDisplay.parentElement.classList.add('fade-out'); // word-display-container
+    document.querySelector('.controls').classList.add('fade-out');
+    
+    // After fade out completes, show results with fade in
+    setTimeout(() => {
+        // Hide typing interface elements
+        elements.timerDisplay.style.display = 'none';
+        elements.wordDisplay.parentElement.style.display = 'none';
+        document.querySelector('.controls').style.display = 'none';
+        
+        // Show results and set WPM
+        elements.results.style.display = 'block';
+        elements.wpmNumber.textContent = wpm;
+        
+        // Fade in results after a brief delay
+        setTimeout(() => {
+            elements.results.classList.add('show');
+        }, 50);
+    }, 400); // Wait for fade out to complete
 }
 
 /**
@@ -450,12 +465,16 @@ function restartTest() {
         testState.timer = null;
     }
     
-    // Reset UI
+    // Reset UI and remove fade classes
     elements.timeSelector.style.display = 'flex';
     elements.timerDisplay.style.display = 'none';
-    elements.wordDisplay.style.display = 'block';
-    elements.restartBtn.style.display = 'block';
+    elements.timerDisplay.classList.remove('fade-out');
+    elements.wordDisplay.parentElement.style.display = 'block';
+    elements.wordDisplay.parentElement.classList.remove('fade-out');
+    document.querySelector('.controls').style.display = 'block';
+    document.querySelector('.controls').classList.remove('fade-out');
     elements.results.style.display = 'none';
+    elements.results.classList.remove('show');
     elements.countdown.textContent = testState.testDuration;
     
     // Generate new words and reset display

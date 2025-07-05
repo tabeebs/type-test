@@ -82,6 +82,12 @@ main {
 /* Timer Display */
 .timer-display {
     text-align: center;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+}
+
+.timer-display.fade-out {
+    opacity: 0;
 }
 
 .countdown {
@@ -97,6 +103,12 @@ main {
     width: 100%;
     max-width: 800px;
     position: relative;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+}
+
+.word-display-container.fade-out {
+    opacity: 0;
 }
 
 .word-display {
@@ -158,6 +170,12 @@ main {
 /* Controls */
 .controls {
     text-align: center;
+    opacity: 1;
+    transition: opacity 0.4s ease-out;
+}
+
+.controls.fade-out {
+    opacity: 0;
 }
 
 .restart-btn {
@@ -182,6 +200,12 @@ main {
 /* Results Display */
 .results {
     text-align: center;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.results.show {
+    opacity: 1;
 }
 
 .wpm-display {

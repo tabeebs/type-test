@@ -71,16 +71,16 @@ This document outlines the development plan for the WPM typing test application,
 
 ## Phase 5: Test Completion and Results Display
 
-- [ ] **End of Test:** 
-    - [ ] The test concludes when the countdown timer reaches 0.
-- [ ] **WPM Calculation:**
-    - [ ] Once the timer finishes, calculate the final score using the formula: `WPM = round(correct key strokes / 5)`.
-- [ ] **UI Transition to Results:**
-    - [ ] Smoothly fade out the entire typing interface (word box, timer).
-    - [ ] Smoothly fade in the results display screen.
-- [ ] **Results Display:**
-    - [ ] Display the calculated WPM score.
-    - [ ] Style the WPM number and "wpm" text as specified in concept sketch #8 (Arvo font, colors, drop shadow).
+- [x] **End of Test:** 
+    - [x] The test concludes when the countdown timer reaches 0.
+- [x] **WPM Calculation:**
+    - [x] Once the timer finishes, calculate the final score using the formula: `WPM = round(correct key strokes / 5)`.
+- [x] **UI Transition to Results:**
+    - [x] Smoothly fade out the entire typing interface (word box, timer).
+    - [x] Smoothly fade in the results display screen.
+- [x] **Results Display:**
+    - [x] Display the calculated WPM score.
+    - [x] Style the WPM number and "wpm" text as specified in concept sketch #8 (Arvo font, colors, drop shadow).
 
 ## Phase 6: Reset and Refinement
 
