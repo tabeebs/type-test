@@ -118,25 +118,39 @@ main {
 .word-display {
     background: #f3f3f3;
     border-radius: 16px;
-    padding: 20px 25px;
-    height: 80px;
+    padding: 25px 30px;
+    height: 120px;
+    width: 100%;
+    max-width: 600px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     font-family: 'Lexend', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     line-height: 1.4;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
+    text-indent: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .caret {
     position: absolute;
     width: 2px;
-    height: 2rem;
-    background: #000000;
-    animation: blink 1s infinite;
+    height: 32px;
+    background: #f1c40f;
     z-index: 10;
+    opacity: 1;
+    transition: opacity 0.1s ease;
+    min-width: 2px;
+    max-width: 2px;
+}
+
+.caret.blinking {
+    animation: blink 1s infinite;
 }
 
 @keyframes blink {
@@ -147,30 +161,116 @@ main {
 .words-content {
     position: relative;
     z-index: 1;
-    line-height: 1.8;
+    line-height: 1.5;
+    padding: 0;
+    height: 3em;
+    overflow: hidden;
+    transition: transform 0.3s ease-out;
+    display: block;
+    width: 100%;
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: left;
+    text-indent: 0;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    text-align-last: left;
+    text-justify: auto;
+    hanging-punctuation: none;
+    text-indent: 0;
+    text-align: left;
+    word-break: normal;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.words-content > * {
+    text-indent: 0;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 .word {
     display: inline;
+    position: relative;
+    white-space: nowrap;
+    word-break: keep-all;
+    text-indent: 0;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    text-align: left;
+    text-indent: 0;
+}
+
+.word:first-child {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.word.current {
+    color: #000000;
+    padding: 0;
+    border-radius: 0;
+    margin: 0;
+    font-weight: 400;
 }
 
 .char {
     position: relative;
     display: inline;
+    white-space: pre;
+    font-weight: 400;
+    width: auto;
+    min-width: 0;
 }
 
 .char.correct {
-    color: #44bd32;
-    background-color: rgba(68, 189, 50, 0.1);
+    color: #44bd32 !important;
+    font-weight: 400;
+    background: transparent;
 }
 
 .char.incorrect {
-    color: #eb2f06;
-    background-color: rgba(235, 47, 6, 0.1);
+    color: #eb2f06 !important;
+    font-weight: 400;
+    background: transparent;
 }
 
 .char.space {
     display: inline;
+    white-space: pre;
+    width: 0.25em;
+    min-width: 0.25em;
+    margin: 0;
+    padding: 0;
+}
+
+.char.space.correct,
+.char.space.incorrect {
+    background: transparent;
+    color: transparent;
+}
+
+.word.completed {
+    color: #44bd32;
+    font-weight: 400;
+}
+
+.word.current .char {
+    color: #000000;
+}
+
+.word.current .char.correct {
+    color: #44bd32 !important;
+}
+
+.word.current .char.incorrect {
+    color: #eb2f06 !important;
 }
 
 /* Controls */

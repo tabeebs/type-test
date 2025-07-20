@@ -3,20 +3,22 @@
  * Main JavaScript file for handling typing test functionality
  */
 
-// Application state
-let testState = {
-  isTestActive: false,
-  testDuration: 60,
-  timeRemaining: 60,
+// Global state
+const testState = {
+  words: [],
   currentWordIndex: 0,
   currentCharIndex: 0,
-  correctKeystrokes: 0,
-  words: [],
+  displayStartIndex: 0,
+  isTestActive: false,
+  timeRemaining: 60,
+  testDuration: 60,
   timer: null,
-  displayStartIndex: 0, // Index of first word currently displayed
-  linesGenerated: 0, // Track how many lines have been generated
-  lastInputTime: 0, // Track last input time for throttling
-  inputThrottleDelay: 10, // Minimum delay between inputs in milliseconds
+  keystrokes: 0,
+  correctKeystrokes: 0,
+  lastInputTime: 0,
+  inputThrottleDelay: 50,
+  caretBlinkTimeout: null,
+  isTyping: false
 };
 
 // DOM elements
@@ -36,21 +38,17 @@ const elements = {
  * Initialize the application
  */
 function initializeApp() {
-  // Check if all required elements exist
-  if (!elements.wordsContent || !elements.wordDisplay) {
-    console.warn("Required DOM elements not found. Skipping initialization.");
-    return;
-  }
-
+  // Generate initial words
   generateTestWords();
-  setupEventListeners();
-  updateCaretPosition();
 
-  // Make word display focusable for keyboard input
-  elements.wordDisplay.setAttribute("tabindex", "0");
-  if (elements.wordDisplay.focus) {
-    elements.wordDisplay.focus();
-  }
+  // Render words
+  renderWords();
+
+  // Setup event listeners
+  setupEventListeners();
+
+  // Start caret blinking initially
+  startCaretBlinking();
 }
 
 /**
@@ -82,9 +80,9 @@ function renderWords() {
 
   elements.wordsContent.innerHTML = "";
 
-  // Display words starting from displayStartIndex, showing about 50 words
+  // Display words starting from displayStartIndex, showing about 35 words to ensure two lines
   const endIndex = Math.min(
-    testState.displayStartIndex + 50,
+    testState.displayStartIndex + 35,
     testState.words.length,
   );
   const wordsToDisplay = testState.words.slice(
@@ -97,6 +95,13 @@ function renderWords() {
     const wordElement = document.createElement("span");
     wordElement.className = "word";
     wordElement.setAttribute("data-word-index", absoluteWordIndex);
+
+    // Add current word highlighting
+    if (absoluteWordIndex === testState.currentWordIndex) {
+      wordElement.classList.add("current");
+    } else if (absoluteWordIndex < testState.currentWordIndex) {
+      wordElement.classList.add("completed");
+    }
 
     // Create span for each character
     for (let i = 0; i < word.length; i++) {
@@ -197,27 +202,37 @@ function handleKeyPress(event) {
     return;
   }
 
-  // Prevent default behavior for typing keys
-  if (event.key.length === 1 || event.key === "Backspace") {
-    event.preventDefault();
-  }
-
-  // Skip if test is not active and not starting
-  if (!testState.isTestActive && event.key.length !== 1) {
+  // Check if this is a control key combination (Ctrl, Alt, Meta, etc.)
+  if (event.ctrlKey || event.altKey || event.metaKey) {
+    // Allow control key combinations to work normally
     return;
   }
 
-  // Start test on first valid character input
-  if (!testState.isTestActive && event.key.length === 1) {
-    startTest();
+  // Only handle typing characters and backspace
+  if (event.key === "Backspace") {
+    event.preventDefault();
+    if (testState.isTestActive) {
+      handleBackspace();
+    }
+    return;
   }
 
-  // Update last input time
-  testState.lastInputTime = currentTime;
+  // Check if this is a valid typing character (letters, numbers, punctuation, space)
+  const isValidTypingChar = event.key.length === 1 && 
+    (event.key.match(/[a-zA-Z0-9\s.,!?;:'"()-]/) || event.key === ' ');
 
-  if (event.key === "Backspace") {
-    handleBackspace();
-  } else if (event.key.length === 1) {
+  if (isValidTypingChar) {
+    event.preventDefault();
+    
+    // Start test on first valid character input
+    if (!testState.isTestActive) {
+      startTest();
+    }
+    
+    // Update last input time
+    testState.lastInputTime = currentTime;
+    
+    // Handle the character input
     handleCharacterInput(event.key);
   }
 }
@@ -250,6 +265,9 @@ function startTest() {
 function handleCharacterInput(char) {
   if (!testState.isTestActive) return;
 
+  // Handle typing for caret blinking
+  handleTyping();
+
   const currentWord = testState.words[testState.currentWordIndex];
   const currentChar = getCurrentChar();
 
@@ -263,8 +281,16 @@ function handleCharacterInput(char) {
     currentChar.classList.add("incorrect");
   }
 
+  // Store current word index before moving
+  const previousWordIndex = testState.currentWordIndex;
+
   // Move to next character
   moveToNextChar();
+  
+  // Only update word highlighting if we moved to a new word
+  if (testState.currentWordIndex !== previousWordIndex) {
+    updateWordHighlighting();
+  }
 }
 
 /**
@@ -273,12 +299,16 @@ function handleCharacterInput(char) {
 function handleBackspace() {
   if (!testState.isTestActive) return;
 
+  // Handle typing for caret blinking
+  handleTyping();
+
   // Don't allow backspace if at the very beginning
   if (testState.currentWordIndex === 0 && testState.currentCharIndex === 0) {
     return;
   }
 
   moveToPrevChar();
+  updateWordHighlighting();
 }
 
 /**
@@ -323,6 +353,27 @@ function moveToNextChar() {
 }
 
 /**
+ * Update word highlighting based on current position
+ */
+function updateWordHighlighting() {
+  // Remove all current highlighting
+  const allWords = elements.wordsContent.querySelectorAll(".word");
+  allWords.forEach(word => {
+    word.classList.remove("current", "completed");
+  });
+
+  // Add highlighting based on current position
+  allWords.forEach(word => {
+    const wordIndex = parseInt(word.getAttribute("data-word-index"));
+    if (wordIndex === testState.currentWordIndex) {
+      word.classList.add("current");
+    } else if (wordIndex < testState.currentWordIndex) {
+      word.classList.add("completed");
+    }
+  });
+}
+
+/**
  * Check if line scrolling is needed and handle it
  */
 function checkAndHandleLineScrolling() {
@@ -334,8 +385,8 @@ function checkAndHandleLineScrolling() {
   const containerRect = elements.wordDisplay.getBoundingClientRect();
   const charRect = currentChar.getBoundingClientRect();
 
-  // Get the height of the container minus padding
-  const containerHeight = elements.wordDisplay.clientHeight - 60; // Account for padding
+  // Get the height of the container minus padding (2 lines max)
+  const containerHeight = elements.wordDisplay.clientHeight - 40; // Account for padding
   const lineHeight = parseFloat(
     getComputedStyle(elements.wordsContent).lineHeight,
   );
@@ -343,7 +394,8 @@ function checkAndHandleLineScrolling() {
   // Check if we're beyond the visible area (need to scroll)
   const charTopRelative = charRect.top - containerRect.top;
 
-  if (charTopRelative > containerHeight - lineHeight) {
+  // Trigger scroll when we're about to go beyond the second line
+  if (charTopRelative > containerHeight - lineHeight * 0.5) {
     handleLineScrolling();
   }
 }
@@ -384,8 +436,8 @@ function animateLineScroll(newStartIndex) {
   const wordsContent = elements.wordsContent;
 
   // Add transition class for smooth animation
-  wordsContent.style.transition = "transform 0.15s ease-out";
-  wordsContent.style.transform = "translateY(-1.8em)";
+  wordsContent.style.transition = "transform 0.3s ease-out";
+  wordsContent.style.transform = "translateY(-1.5em)";
 
   // Use requestAnimationFrame for smoother animation
   requestAnimationFrame(() => {
@@ -403,12 +455,12 @@ function animateLineScroll(newStartIndex) {
       requestAnimationFrame(() => {
         setTimeout(() => {
           wordsContent.style.transition = "";
-        }, 150);
+        }, 300);
       });
 
       // Update caret position after re-render
       updateCaretPosition();
-    }, 150);
+    }, 300);
   });
 }
 
@@ -454,8 +506,8 @@ function updateCaretPosition() {
       if (firstChar) {
         const rect = firstChar.getBoundingClientRect();
         const containerRect = elements.wordDisplay.getBoundingClientRect();
-        elements.caret.style.left = rect.left - containerRect.left + "px";
-        elements.caret.style.top = rect.top - containerRect.top + "px";
+        elements.caret.style.left = (rect.left - containerRect.left - 1) + "px";
+        elements.caret.style.top = (rect.top - containerRect.top + (rect.height - 32) / 2) + "px";
       }
       return;
     }
@@ -463,13 +515,15 @@ function updateCaretPosition() {
     const rect = currentChar.getBoundingClientRect();
     const containerRect = elements.wordDisplay.getBoundingClientRect();
 
-    elements.caret.style.left = rect.left - containerRect.left + "px";
-    elements.caret.style.top = rect.top - containerRect.top + "px";
+    // Position caret at the beginning of the current character with precise alignment
+    elements.caret.style.left = (rect.left - containerRect.left - 1) + "px";
+    elements.caret.style.top = (rect.top - containerRect.top + (rect.height - 32) / 2) + "px";
+    elements.caret.style.height = "32px";
   } catch (error) {
     console.warn("Error updating caret position:", error);
     // Fallback: position caret at start
-    elements.caret.style.left = "0px";
-    elements.caret.style.top = "0px";
+    elements.caret.style.left = "25px";
+    elements.caret.style.top = "34px";
   }
 }
 
@@ -485,8 +539,16 @@ function endTest() {
     testState.timer = null;
   }
 
-  // Calculate WPM
-  const wpm = Math.round(testState.correctKeystrokes / 5);
+  // Calculate WPM - adjust for different time durations
+  let wpm = Math.round(testState.correctKeystrokes / 5);
+  
+  // Adjust WPM based on test duration
+  if (testState.testDuration === 15) {
+    wpm = wpm * 4; // 15 seconds * 4 = 60 seconds
+  } else if (testState.testDuration === 30) {
+    wpm = wpm * 2; // 30 seconds * 2 = 60 seconds
+  }
+  // 60 seconds is already correct (multiply by 1)
 
   // Smoothly fade out the typing interface
   elements.timerDisplay.classList.add("fade-out");
@@ -503,6 +565,16 @@ function endTest() {
     // Show results and set WPM
     elements.results.style.display = "block";
     elements.wpmNumber.textContent = wpm;
+
+    // Show restart button on results screen
+    const resultsRestartBtn = document.createElement("button");
+    resultsRestartBtn.className = "restart-btn";
+    resultsRestartBtn.textContent = "Restart (TAB)";
+    resultsRestartBtn.addEventListener("click", restartTest);
+    
+    // Insert restart button after the WPM display
+    const wpmDisplay = elements.results.querySelector(".wpm-display");
+    wpmDisplay.parentNode.insertBefore(resultsRestartBtn, wpmDisplay.nextSibling);
 
     // Fade in results after a brief delay
     setTimeout(() => {
@@ -548,10 +620,22 @@ function restartTest() {
   elements.results.classList.remove("show");
   elements.countdown.textContent = testState.testDuration;
 
+  // Remove dynamically created restart button from results screen
+  const resultsRestartBtn = elements.results.querySelector(".restart-btn");
+  if (resultsRestartBtn) {
+    resultsRestartBtn.remove();
+  }
+
   // Reset word display styling
   const allChars = elements.wordsContent.querySelectorAll(".char");
   allChars.forEach((char) => {
     char.classList.remove("correct", "incorrect");
+  });
+
+  // Reset word highlighting
+  const allWords = elements.wordsContent.querySelectorAll(".word");
+  allWords.forEach((word) => {
+    word.classList.remove("current", "completed");
   });
 
   // Generate new words and reset display
@@ -564,6 +648,44 @@ function restartTest() {
       elements.wordDisplay.focus();
     }
   }, 100);
+}
+
+/**
+ * Start caret blinking
+ */
+function startCaretBlinking() {
+  if (elements.caret) {
+    elements.caret.classList.add('blinking');
+  }
+}
+
+/**
+ * Stop caret blinking
+ */
+function stopCaretBlinking() {
+  if (elements.caret) {
+    elements.caret.classList.remove('blinking');
+    elements.caret.style.opacity = '1';
+  }
+}
+
+/**
+ * Handle user typing - stop blinking and set timeout to restart
+ */
+function handleTyping() {
+  testState.isTyping = true;
+  stopCaretBlinking();
+  
+  // Clear existing timeout
+  if (testState.caretBlinkTimeout) {
+    clearTimeout(testState.caretBlinkTimeout);
+  }
+  
+  // Start blinking again after 1 second of no typing
+  testState.caretBlinkTimeout = setTimeout(() => {
+    testState.isTyping = false;
+    startCaretBlinking();
+  }, 1000);
 }
 
 // Initialize the application when the page loads
